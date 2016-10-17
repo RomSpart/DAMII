@@ -8,7 +8,6 @@ package Vista;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -188,7 +187,7 @@ public class View1 extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        proyecto1.Proyecto1.goToRegister("");
+        proyecto1.Proyecto1.goToRegister("","");
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing

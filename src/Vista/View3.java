@@ -16,7 +16,7 @@ import javax.swing.JLabel;
  */
 public class View3 extends javax.swing.JFrame {
 
-    private String userToken;
+    private String userToken, passToken;
     final private String[] stringMatrix;
     final private JLabel name, surname, email, dni, user, pass;
 
@@ -47,6 +47,8 @@ public class View3 extends javax.swing.JFrame {
         dni.setText(stringMatrix[3]);
         user.setText(stringMatrix[4]);
         pass.setText(stringMatrix[5]);
+        
+        passToken = pass.getText();
     }
 
     public JButton getjButton1() {
@@ -288,7 +290,7 @@ public class View3 extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        proyecto1.Proyecto1.goToRegister(userToken);
+        proyecto1.Proyecto1.goToRegister(userToken, passToken);
 
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -24,9 +24,10 @@ public class View2 extends javax.swing.JFrame {
 
     private String name, surname, dni,
             permissions, email, username, password, auxPassword;
-    private String userToken;
+    private String userToken, passToken;
     private static final Pattern VALID_EMAIL_ADDRESS_REGEX
             = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+    private boolean token1, token2;
 
     /**
      * Creates new form View2
@@ -44,6 +45,8 @@ public class View2 extends javax.swing.JFrame {
         email = "";
         username = "";
         password = "";
+        token1 = false;
+        token2 = false;
     }
 
     public JButton getjButton1() {
@@ -76,6 +79,22 @@ public class View2 extends javax.swing.JFrame {
 
     public JLabel getjLabel6() {
         return jLabel6;
+    }
+
+    public void setUserToken(String userToken) {
+        this.userToken = userToken;
+    }
+
+    public void setPassToken(String passToken) {
+        this.passToken = passToken;
+    }
+
+    public void setToken1(boolean token1) {
+        this.token1 = token1;
+    }
+
+    public void setToken2(boolean token2) {
+        this.token2 = token2;
     }
 
     /**
@@ -228,6 +247,9 @@ public class View2 extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
 
+        String auxUser = "";
+        String auxPass = "";
+
         if (userToken.equals("")) {
 
             name = jTextField1.getText();
@@ -324,16 +346,23 @@ public class View2 extends javax.swing.JFrame {
 
             username = jTextField5.getText();
             if (!(username.equals(""))) {
-                proyecto1.Proyecto1.modify(userToken, "username", username);
-                userToken = username;
-            }
+                proyecto1.Proyecto1.modify(userToken, "username", username);                
+            }else token1 = true;
 
             password = new String(jPasswordField1.getPassword());
             if (!(password.equals(""))) {
                 proyecto1.Proyecto1.modify(userToken, "password", password);
+            }else token2 = true;
 
-            }
-            proyecto1.Proyecto1.goToMain();
+            if (this.token1) {
+                auxUser = userToken;
+            }else auxUser = username;
+            if (this.token2) {
+                auxPass = passToken;
+            }else auxPass = password;
+            
+            proyecto1.Proyecto1.logIn(auxUser, auxPass);
+
         }
 
 
@@ -385,10 +414,6 @@ public class View2 extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> {
             new View2().setVisible(true);
         });
-    }
-
-    public void setUserToken(String userToken) {
-        this.userToken = userToken;
     }
 
     public static boolean isNifNie(String nif) {
