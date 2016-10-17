@@ -23,13 +23,20 @@ public class View1 extends javax.swing.JFrame {
     private String username, password;
 
     /**
-     * Creates new form View1
+     * Constructor de View1, gestiona la posición del formulario con respecto a
+     * la pantalla.
      */
     public View1() {
         initComponents();
+        position();
+    }
+
+    /**
+     * Gestiona la posición inicial de la ventana
+     */
+    private void position() {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
-
     }
 
     /**
@@ -164,13 +171,10 @@ public class View1 extends javax.swing.JFrame {
 
         if (username.equals("") || password.equals("")) {
             JOptionPane.showMessageDialog(this, "No puedes dejar los campos en blanco.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (proyecto1.Proyecto1.logIn(username, password)) {
+            JOptionPane.showMessageDialog(this, "Identificación con éxito.");
         } else {
-            if (proyecto1.Proyecto1.logIn(username, password)) {
-                JOptionPane.showMessageDialog(this, "Identificación con éxito.");
-            } else {
-                JOptionPane.showMessageDialog(this, "Fallo. Los datos no coinciden con el registro.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-
+            JOptionPane.showMessageDialog(this, "Fallo. Los datos no coinciden con el registro.", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -187,7 +191,7 @@ public class View1 extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        proyecto1.Proyecto1.goToRegister("","");
+        proyecto1.Proyecto1.goToRegister("", "");
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -209,39 +213,6 @@ public class View1 extends javax.swing.JFrame {
         // TODO add your handling code here:
         proyecto1.Proyecto1.accesibility(-1);
     }//GEN-LAST:event_jButton5ActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(View1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(View1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(View1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(View1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> {
-            new View1().setVisible(true);
-        });
-    }
 
     public JButton getjButton1() {
         return jButton1;

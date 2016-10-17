@@ -19,18 +19,18 @@ public class View3 extends javax.swing.JFrame {
     private String userToken, passToken;
     final private String[] stringMatrix;
     final private JLabel name, surname, email, dni, user, pass;
-
-    public void setUserToken(String userToken) {
-        this.userToken = userToken;
-    }
-
+    
+    
+    
     /**
-     * Creates new form View3
+     * COnstructor de View3. Recibe por parámetro el nombre de usuario.
+     * Inicia la ventana, y tras recibir de showData un String[] con los
+     * datos del usuario, los muestra en los jLabel.
+     * 
      */
     public View3(String token) {
         initComponents();
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
+        position();
         
         this.userToken=token;
         name = this.jLabel7;
@@ -50,7 +50,22 @@ public class View3 extends javax.swing.JFrame {
         
         passToken = pass.getText();
     }
+    
+    /**
+     * Gestiona la posición inicial de la ventana
+     */
+    private void position() {
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
+    }
+    
+    // Setter
+    public void setUserToken(String userToken) {
+        this.userToken = userToken;
+    }
 
+
+    //Getter
     public JButton getjButton1() {
         return jButton1;
     }
@@ -319,39 +334,6 @@ public class View3 extends javax.swing.JFrame {
         proyecto1.Proyecto1.eraseUser(userToken);
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(View3.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(View3.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(View3.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(View3.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> {
-            new View3(null).setVisible(true);
-        });
-
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

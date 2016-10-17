@@ -18,17 +18,16 @@ import javax.swing.JOptionPane;
  */
 public class Proyecto1 {
 
-    private static View1 v1;
-    private static View2 v2;
-    private static View3 v3;
-    private static UserManager um;
-    public boolean logged = false;    
+    private static View1 v1; // Objeto que contiene la referencia a la vista 1.
+    private static View2 v2; // Objeto que contiene la referencia a la vista 1.
+    private static View3 v3; // Objeto que contiene la referencia a la vista 1.
+    private static UserManager um; // Objecto UserManager.
     /**
      * @param args the command line arguments
      * @throws java.io.IOException
      */
     public static void main(String[] args) throws IOException {
-        // TODO code application logic here
+        // Se inicializa el gestor de usuarios y la vista inicial.
 
         um = new UserManager();
         v1 = new View1();
@@ -36,6 +35,9 @@ public class Proyecto1 {
 
     }
 
+    /**
+     * Método que cierra las vistas 2 y 3, para luego iniciar la vista 1.
+     */
     private static void view1Up() {
 
         if (v2 != null) {
@@ -51,6 +53,11 @@ public class Proyecto1 {
 
     }
 
+    /**
+     * Cierra la vista 3 si existe, y abre la vista 2.
+     * @param user Usuario (en caso de estar logeado)
+     * @param pass Contraseña (en caso de estar logeado)
+     */
     private static void view2Up(String user, String pass) {
 
         if (v3 != null) {
@@ -66,6 +73,10 @@ public class Proyecto1 {
 
     }
 
+    /**
+     * Cierra la vista dos y abre la vista 3.
+     * @param user Usuario (Para mostrar el resto de datos)
+     */
     private static void view3Up(String user) {
 
         if (v2 != null) {
@@ -78,6 +89,12 @@ public class Proyecto1 {
 
     }
 
+    /**
+     * Comprueba que el usuario y contraseña sean correctos y abre la vista 3.
+     * @param username Usuario
+     * @param password Contraseña
+     * @return 
+     */
     public static boolean logIn(String username, String password) {
 
         if (um.buscarUsuario(username)) {
@@ -95,14 +112,34 @@ public class Proyecto1 {
 
     }
 
+    /**
+     * Llama al método privado view1Up.
+     */
     public static void goToMain() {
         view1Up();
     }
 
+    /**
+     * Llama al método privado view2Up
+     * @param user Usuario pasado al método
+     * @param pass Contraseña pasada al método
+     */
     public static void goToRegister(String user, String pass) {
         view2Up(user, pass);
     }
 
+    /**
+     * Llama al método crearNuevoUsuario de la clase UserManager
+     * @param name Nombre
+     * @param surname Apellido
+     * @param dni Dni
+     * @param permissions Permisos
+     * @param email Email
+     * @param username Usuario
+     * @param password Contraseña
+     * @return true o false en función de si crearNuevoUsuario acaba correctamente.
+     * @throws IOException 
+     */
     public static boolean register(String name, String surname, String dni,
             String permissions, String email, String username, String password) throws IOException {
 
@@ -110,6 +147,12 @@ public class Proyecto1 {
 
     }
 
+    /**
+     * Modifica un usuario previamente creado mediante el método modificarUsuario de la clase UserManager. Previamente hace las comprobaciones necesarias.
+     * @param username Usuario
+     * @param campo Campo a modificar
+     * @param nuevo Nuevo valor
+     */
     public static void modify(String username, String campo, String nuevo) {
 
         switch (campo) {
@@ -135,6 +178,11 @@ public class Proyecto1 {
         }
     }
 
+    /**
+     * Devuelve los datos de un usuario que queremos mostrar.
+     * @param username Usuario
+     * @return Array de String con los datos de usuario.
+     */
     public static String[] showData(String username) {
 
         String[] cadena = new String[6];
@@ -149,6 +197,10 @@ public class Proyecto1 {
         return cadena;
     }
 
+    /**
+     * Modifica el tamaño de la fuente de la vista seleccionada.
+     * @param i Aumentar o disminuir (-1 o +1)
+     */
     public static void accesibility(int i) {
 
         if (i > 0) {
@@ -234,7 +286,12 @@ public class Proyecto1 {
             }
         }
     }
-
+    
+    
+    /**
+     * Borra un usuario almacenado tras pasar por el login y confirmación mediante contraseña.
+     * @param userName Usuario
+     */
     public static void eraseUser(String userName) {
 
         String pass = JOptionPane.showInputDialog(v3, "Introduce tu contraseña:");
@@ -252,9 +309,13 @@ public class Proyecto1 {
         }
     }
 
+    /**
+     * Llama al método closeAndWrite de la clase UserManager y cierra el programa.
+     * @throws IOException 
+     */
     public static void closeAndSave() throws IOException {
         um.closeAndWrite();
-        System.exit(0);
+        System.exit(0);        
     }
 
 }

@@ -22,20 +22,19 @@ import javax.swing.JOptionPane;
  */
 public class View2 extends javax.swing.JFrame {
 
+    //Strings con los que trabaja la entrada de datos.
     private String name, surname, dni,
-            permissions, email, username, password, auxPassword;
-    private String userToken, passToken;
-    private static final Pattern VALID_EMAIL_ADDRESS_REGEX
-            = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+            permissions, email, username, password, auxPassword, userToken, passToken;    
+    //Booleanos auxiliares.
     private boolean token1, token2;
 
     /**
-     * Creates new form View2
+     * Constructor de View2. Inicializa los String y Boolean, y posiciona la 
+     * ventana.
      */
     public View2() {
         initComponents();
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
+        position();
 
         userToken = "";
         name = "";
@@ -48,7 +47,15 @@ public class View2 extends javax.swing.JFrame {
         token1 = false;
         token2 = false;
     }
+    /**
+     * Gestiona la posición inicial de la ventana
+     */
+    private void position() {
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
+    }
 
+    //Getters
     public JButton getjButton1() {
         return jButton1;
     }
@@ -80,6 +87,8 @@ public class View2 extends javax.swing.JFrame {
     public JLabel getjLabel6() {
         return jLabel6;
     }
+    
+    //Setters
 
     public void setUserToken(String userToken) {
         this.userToken = userToken;
@@ -383,40 +392,13 @@ public class View2 extends javax.swing.JFrame {
         proyecto1.Proyecto1.accesibility(-1);
     }//GEN-LAST:event_jButton5ActionPerformed
 
+
     /**
-     * @param args the command line arguments
+     * Comprueba si el Nif/Nie es válido.
+     * @param nif String con Nif/Nie
+     * @return 
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(View2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(View2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(View2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(View2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> {
-            new View2().setVisible(true);
-        });
-    }
-
-    public static boolean isNifNie(String nif) {
+    private boolean isNifNie(String nif) {
 
         //si es NIE, eliminar la x,y,z inicial para tratarlo como nif
         if (nif.toUpperCase().startsWith("X") || nif.toUpperCase().startsWith("Y") || nif.toUpperCase().startsWith("Z")) {
@@ -439,13 +421,23 @@ public class View2 extends javax.swing.JFrame {
             return false;
         }
     }
-
-    public boolean capitalLetter(String str) {
+    
+    /**
+     * Comprueba si el nombre comienza con letra capital.
+     * @param str Nombre
+     * @return 
+     */
+    private boolean capitalLetter(String str) {
 
         return Character.isUpperCase(str.charAt(0));
     }
 
-    public static boolean isNumeric(String str) {
+    /**
+     * Comprueba que el nombre y los apellidos no contengan números.
+     * @param str Nombre/apellidos
+     * @return 
+     */
+    private boolean isNumeric(String str) {
         for (char c : str.toCharArray()) {
             if (Character.isDigit(c)) {
                 return true;
@@ -454,7 +446,14 @@ public class View2 extends javax.swing.JFrame {
         return false;
     }
 
-    public static boolean validate(String emailStr) {
+    /**
+     * Comprueba que el email tenga un formato válido.
+     * @param emailStr Email
+     * @return 
+     */
+    private boolean validate(String emailStr) {
+        Pattern VALID_EMAIL_ADDRESS_REGEX
+            = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
         return matcher.find();
     }

@@ -23,14 +23,20 @@ import java.util.Scanner;
  */
 public class UserManager {
 
-    private Map<String, User> map;
-    private Gson obj;
-    private FileWriter fileW;
-    private FileReader fileR;
-    private User user;
-    private Scanner in;
-    private String a;
+    private Map<String, User> map;  //Map que contendrá los usuarios mientras el programa esté en ejecución
+    private Gson obj;               //Objeto Gson para tratar los datos input/output a JSON
+    private FileWriter fileW; //Objeto FileWriter que escribirá datos al archivo Users.json
+    private FileReader fileR;       //Objeto FileReader que leerá datos del archivo Users.json
+    private User user;              //Objeto User "plantilla" que rellenaremos e introduciremos a map
+    private Scanner in;             //
 
+    
+    /**
+     * Constructor de UserManager. Inicializa map y obj, inicializa fileR y fileW,
+     * en caso e que el archivo Users.json no exista, lo crea. Si existe, llama a
+     * openAndRead.
+     * @throws IOException 
+     */
     UserManager() throws IOException {
 
         map = new HashMap<>();
@@ -57,8 +63,8 @@ public class UserManager {
     }
 
     /**
-     *
-     * @param username
+     * Devuelve true si existe un usuario con el username especificado en "map"
+     * @param username Usuario
      * @return
      */
     public Boolean buscarUsuario(String username) {
@@ -70,6 +76,11 @@ public class UserManager {
         }
     }
 
+    /**
+     * Devuelve el usuario por cuyo username preguntamos.
+     * @param username Usuario
+     * @return 
+     */
     public User userData(String username) {
 
         User user = map.get(username);
@@ -78,14 +89,15 @@ public class UserManager {
     }
 
     /**
-     *
-     * @param name
-     * @param surname
-     * @param dni
-     * @param permissions
-     * @param email
-     * @param username
-     * @param password
+     * Comprueba si el usuario que intentamos introducir existe, y en caso negativo,
+     * lo introduce en map.
+     * @param name Nombre
+     * @param surname Apellido
+     * @param dni Dni
+     * @param permissions Permisos
+     * @param email Email
+     * @param username Usuario
+     * @param password Contraseña
      * @throws java.io.IOException
      */
     public boolean crearNuevoUsuario(String name, String surname, String dni,
@@ -102,14 +114,15 @@ public class UserManager {
     }
 
     /**
-     *
-     * @param username
-     * @param password
-     * @return
+     * Comprueba que el logIn sea correcto, comparando el usuario y contraseña, con los almacenadas
+     * para el usuario especificado
+     * @param username Usuario
+     * @param password Contraseña
+     * @return True si coincide.
      */
     public Boolean comprobarLogin(String username, String password) {
 
-        a = map.get(username).getPassword();
+        String a = map.get(username).getPassword();
 
         if (a.equals(password)) {
             System.out.println("Paso1");
@@ -120,6 +133,14 @@ public class UserManager {
         }
     }
 
+    /**
+     * Hace las comprobaciones necesarias para modificar un usuario en función 
+     * del campo que se quiera modificar, véase que el nuevo Username no exista.
+     * @param username Usuario
+     * @param campo Campo a modificar
+     * @param nuevo Nuevo valor del campo
+     * @return 
+     */
     public boolean modificarUsuario(String username, String campo, String nuevo) {
 
         boolean token = true;
@@ -163,6 +184,11 @@ public class UserManager {
         return token;
     }
     
+    /**
+     * Borra un usuario de map, en caso de que exista.
+     * @param userName Usuario
+     * @return true si borra el usuario.
+     */
     public boolean deleteUser(String userName){
     
         if (buscarUsuario(userName)) {
@@ -172,6 +198,10 @@ public class UserManager {
     
     }
 
+    /**
+     * Escribe el contenido de map en el archivo Users.json y cierra el archivo.
+     * @throws IOException 
+     */
     public void closeAndWrite() throws IOException {
 
         obj.toJson(map, fileW);
@@ -179,6 +209,12 @@ public class UserManager {
 
     }
 
+    /**
+     * Carga la información del archivo Users.json en un String y lo pasa a map
+     * en formato String, User.
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     private void openAndRead() throws FileNotFoundException, IOException {
 
         String inString = this.in.nextLine();

@@ -19,10 +19,22 @@ public class User implements java.io.Serializable{
     private String username;
     private String password;
     
+    /**
+     * Constructor predefinido
+     */
     User(){
     
     }
-    
+    /**
+     * Constructor con campos de User en parámetro
+     * @param name
+     * @param surname
+     * @param dni
+     * @param permissions
+     * @param email
+     * @param username
+     * @param password 
+     */
     User(String name, String surname, String dni, String permissions, String email, String username, String password){
     
         this.name           = name;
@@ -34,6 +46,10 @@ public class User implements java.io.Serializable{
         this.password       = password;
     }
     
+    /**
+     * Constructor con User como parámetro.
+     * @param user 
+     */
     User (User user){
         this.name           = user.getName();
         this.dni            = user.getDni();
