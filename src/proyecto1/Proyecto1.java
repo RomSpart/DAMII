@@ -51,7 +51,7 @@ public class Proyecto1 {
 
     }
 
-    private static void view2Up(String user) {
+    private static void view2Up(String user, String pass) {
 
         if (v3 != null) {
             v3.setVisible(false);
@@ -62,6 +62,7 @@ public class Proyecto1 {
         v2.setVisible(true);
         v2.setEnabled(true);
         v2.setUserToken(user);
+        v2.setPassToken(pass);
 
     }
 
@@ -70,11 +71,10 @@ public class Proyecto1 {
         if (v2 != null) {
             v2.setVisible(false);
         }
-
+        v1.setVisible(false);
         v3 = new View3(user);
         v3.setVisible(true);
-        v3.setEnabled(true);
-        v1.setVisible(false);
+        v3.setEnabled(true);        
 
     }
 
@@ -99,41 +99,39 @@ public class Proyecto1 {
         view1Up();
     }
 
-    public static void goToRegister(String user) {
-        view2Up(user);
+    public static void goToRegister(String user, String pass) {
+        view2Up(user, pass);
     }
 
     public static boolean register(String name, String surname, String dni,
             String permissions, String email, String username, String password) throws IOException {
 
-        if (um.crearNuevoUsuario(name, surname, dni, permissions, email, username, password)) {
-            return true;
-        } else {
-            return false;
-        }
+        return um.crearNuevoUsuario(name, surname, dni, permissions, email, username, password);
 
     }
 
     public static void modify(String username, String campo, String nuevo) {
 
-        if (campo.equals("password")) {
-            String pass = JOptionPane.showInputDialog(v2, "Introduce tu contraseña antigua:", "Modificar Contraseña", JOptionPane.ERROR_MESSAGE);
-            if (um.comprobarLogin(username, pass)) {
+        switch (campo) {
+            case "password":
+                String pass = JOptionPane.showInputDialog(v2, "Introduce tu contraseña antigua:", "Modificar Contraseña", JOptionPane.QUESTION_MESSAGE);
+                if (um.comprobarLogin(username, pass)) {
+                    um.modificarUsuario(username, campo, nuevo);
+                    JOptionPane.showMessageDialog(v2, "Modificación realizada con éxito: Password.");
+                } else {
+                    v2.setToken2(true);
+                    JOptionPane.showMessageDialog(v2, "Fallo. La contraseña no coincide.", "Error", JOptionPane.ERROR_MESSAGE);
+                }   break;
+            case "username":
+                if (um.modificarUsuario(username, campo, nuevo)) {
+                    JOptionPane.showMessageDialog(v2, "Modificación realizada con éxito: Username.");
+                } else {
+                    v2.setToken1(true);
+                    JOptionPane.showMessageDialog(v2, "Fallo. El nombre de usuario ya existe.", "Error", JOptionPane.ERROR_MESSAGE);                    
+                }   break;
+            default:
                 um.modificarUsuario(username, campo, nuevo);
-                JOptionPane.showMessageDialog(v2, "Modificación realizada con éxito: Password.");
-            } else {
-                JOptionPane.showMessageDialog(v2, "Fallo. La contraseña no coincide.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        } else if (campo.equals("username")) {
-
-            if (!(um.modificarUsuario(username, campo, nuevo))) {
-                JOptionPane.showMessageDialog(v2, "Fallo. El nombre de usuario ya existe.", "Error", JOptionPane.ERROR_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(v2, "Modificación realizada con éxito: Username.");
-            }
-        } else {
-            um.modificarUsuario(username, campo, nuevo);
-
+                break;
         }
     }
 
